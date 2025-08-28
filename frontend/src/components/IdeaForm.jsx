@@ -238,7 +238,7 @@ export default function IdeaForm({ onSubmit }) {
         {/* Navigation */}
         <div className='flex justify-between items-center pt-10 border-t border-neutral-200 mt-10'>
           <button
-            type="button" 
+            type="button"   
             onClick={handlePrevious}
             disabled={currentStep === 1}
             className='flex items-center gap-2 px-6 py-3 rounded-full text-white/90 hover:text-white hover:bg-blue-500 disabled:opacity-40 disabled:cursor-not-allowed transition bg-blue-500/80'
