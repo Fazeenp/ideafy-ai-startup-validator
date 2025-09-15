@@ -47,7 +47,7 @@ export default function SleekHeader() {
             </Link>
           ))}
           <Link
-            to="/form"
+            to="/login"
             className="px-4 py-1 rounded-full font-semibold bg-gradient-to-r from-yellow-400 via-pink-500 to-purple-500 text-black shadow hover:scale-105 transition-transform cursor-pointer"
           >
             Get Started
