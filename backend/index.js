@@ -2,13 +2,18 @@ import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
 import { GoogleGenerativeAI } from "@google/generative-ai";
-
+import connectDB from "./config/db.js";
+import authRoute from "./routes/auth.js"
 dotenv.config();
+connectDB();
 const app = express();
 app.use(cors());
 app.use(express.json());
 
 const PORT = process.env.PORT || 5000;
+
+app.use("/api/auth", authRoute);
+
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 
 app.post("/api/validate-startup", async (req, res) => {
