@@ -29,7 +29,7 @@ export default function IdeaForm({ onSubmit }) {
     try {
       const response = await axios.post('http://localhost:5000/api/validate-startup',formData)
       const resultData = response.data;
-      navigate("/results", { state: { idea: formData, result: resultData } });
+      navigate("/startupreport", { state: { idea: formData, result: resultData } });
     } catch (error) {
        console.error("Failed to validate idea:", error);
         alert("Something went wrong! Please try again.");
