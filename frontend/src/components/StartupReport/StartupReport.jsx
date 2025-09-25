@@ -37,7 +37,7 @@ export default function StartupReport() {
     const fetchReport = async () => {
       setLoading(true);
       try {
-        const res = await axios.post("http://localhost:5000/api/validate-startup", idea);
+        const res = await axios.post("https://ideafy-ai-startup-validator-backend.onrender.com/api/validate-startup", idea);
         setReportData(res.data);
       } catch (err) {
         console.error("Failed to fetch report:", err);
