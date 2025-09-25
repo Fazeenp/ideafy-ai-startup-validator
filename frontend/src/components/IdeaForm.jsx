@@ -27,7 +27,7 @@ export default function IdeaForm({ onSubmit }) {
 
    const handleSubmit = async() => {
     try {
-      const response = await axios.post('http://localhost:5000/api/validate-startup',formData)
+      const response = await axios.post('https://ideafy-ai-startup-validator-backend.onrender.com/api/validate-startup',formData)
       const resultData = response.data;
       navigate("/startupreport", { state: { idea: formData, result: resultData } });
     } catch (error) {
