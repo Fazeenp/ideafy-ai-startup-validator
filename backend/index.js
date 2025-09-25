@@ -2,13 +2,14 @@ import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
 import { GoogleGenerativeAI } from "@google/generative-ai";
-
+import connectDB from "./config/db.js";
+import authRoute from './routes/auth.js'
 dotenv.config();
-
+connectDB()
 const app = express();
 app.use(cors());
 app.use(express.json());
-
+app.use('/api/auth',authRoute)
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 
 app.post("/api/validate-startup", async (req, res) => {
@@ -27,33 +28,9 @@ app.post("/api/validate-startup", async (req, res) => {
     } = req.body;
 
     const prompt = `
-You are a startup analyst. Evaluate the following startup and return a **JSON only**, matching this structure:
-
-{
-  "executiveOverviewData": {
-    "summary": string,
-    "highlights": [string]
-  },
-  "marketCompetitionData": {
-    "summary": string,
-    "stats": [{"name": string,"value": number}],
-    "drivers": [string],
-    "competitors": [{"name": string,"detail": string}],
-    "radar": [{"aspect": string,"You": number,"Competitors": number}]
-  },
-  "productValidationData": {
-    "features": [{"name": string,"score": number}],
-    "testimonials": [{"user": string,"feedback": string}]
-  },
-  "financialsData": {
-    "revenueProjections": [{"month": string,"You": number,"Competitors": number}],
-    "costBreakdown": [{"category": string,"value": number}]
-  },
-  "recommendationsData": {
-    "keyActions": [string],
-    "risks": [string]
-  }
-}
+YYou are an expert startup analyst. 
+Generate a complete startup evaluation report in JSON format only. 
+Follow the schema exactly. Do not include any explanation outside the JSON.
 
 Startup Details:
 - Name: ${businessName}
@@ -66,6 +43,68 @@ Startup Details:
 - Funding: ${funding}
 - Timeline: ${timeline}
 - Experience: ${experience}
+
+Schema:
+{
+  "executiveOverview": {
+    "summary": "string",
+    "metrics": [{ "label": "string", "value": "string" }],
+    "highlights": ["string"]
+  },
+  "financials": {
+    "summary": "string",
+    "revenue": [
+      { "year": "Year 1", "Revenue": number },
+      { "year": "Year 2", "Revenue": number },
+      { "year": "Year 3", "Revenue": number }
+    ],
+    "kpis": [
+      { "label": "CAC", "value": "string" },
+      { "label": "LTV", "value": "string" },
+      { "label": "Burn Rate", "value": "string" }
+    ],
+    "insights": ["string"]
+  },
+  "marketCompetition": { 
+  "summary": "string",
+  "stats": [
+    { "name": "Competitor A", "value": number },
+    { "name": "Competitor B", "value": number },
+    { "name": "Competitor C", "value": number },
+    { "name": "Others", "value": number }
+  ],
+  "drivers": ["string"],
+  "competitors": [
+    { "name": "string", "detail": "string" }
+  ],
+  "radar": [
+    { "aspect": "Pricing", "You": number, "Competitors": number },
+    { "aspect": "Innovation", "You": number, "Competitors": number },
+    { "aspect": "Support", "You": number, "Competitors": number },
+    { "aspect": "Scalability", "You": number, "Competitors": number }
+  ],
+  "insights": ["string"]
+  },
+  "productValidation": {"summary": "string",
+  "metrics": [
+    { "label": "string", "value": "string" }
+  ],
+  "trends": [
+    { "month": "string", "MVP": number, "Advanced": number }
+  ],
+  "feedback": ["string"]
+  },
+  "recommendations": {
+    "summary": "string",
+    "actions": [{ "title": "string", "tasks": ["string"] }],
+    "risks": [{ "risk": "string", "mitigation": "string" }],
+    "finalNote": "string"
+  }
+}
+
+Return only valid JSON.
+
+
 `;
 
     const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });

@@ -10,8 +10,9 @@ import ExportPDFButton from "./actions/ExportPDFButton";
 import ShareButton from "./actions/ShareButton";
 import RegenerateButton from "./actions/RegenerateButton";
 import logo from "../../assets/ideafy_logo-removebg-preview.png";
-import { BarChart3, Users, CheckCircle2, Coins, Lightbulb } from "lucide-react";
+import { BarChart3, Users, CheckCircle2, Coins, Lightbulb, Book } from "lucide-react";
 import axios from "axios";
+import BusinessTermsSaaS from "./pages/BusinessTermsSaaS";
 
 export default function StartupReport() {
   const location = useLocation();
@@ -27,6 +28,7 @@ export default function StartupReport() {
     { name: "Product Validation", icon: CheckCircle2 },
     { name: "Financials", icon: Coins },
     { name: "Recommendations", icon: Lightbulb },
+    { name: "Business Terms Reference", icon: Book},
   ];
 
   useEffect(() => {
@@ -53,17 +55,20 @@ export default function StartupReport() {
 
     switch (activePage) {
       case "Executive Overview":
-        return <ExecutiveOverview data={reportData.executiveOverviewData} />;
+        return <ExecutiveOverview data={reportData.executiveOverview} />;
       case "Market & Competition":
-        return <MarketCompetition data={reportData.marketCompetitionData} />;
+        return <MarketCompetition data={reportData.marketCompetition} />;
       case "Product Validation":
-        return <ProductValidation data={reportData.productValidationData} />;
+        return <ProductValidation data={reportData.productValidation} />;
       case "Financials":
-        return <Financials data={reportData.financialsData} />;
+        return <Financials data={reportData.financials} />;
       case "Recommendations":
-        return <Recommendations data={reportData.recommendationsData} />;
+        return <Recommendations data={reportData.recommendations} />;
+      case "Business Terms Reference":
+        return <BusinessTermsSaaS />
       default:
-        return <ExecutiveOverview data={reportData.executiveOverviewData} />;
+        return <ExecutiveOverview data={reportData.executiveOverview} />;
+      
     }
   };
 
@@ -96,7 +101,7 @@ export default function StartupReport() {
         </nav>
 
         <div className="p-4 border-t border-neutral-800 space-y-3">
-          <ExportPDFButton onClick={() => alert("Exporting PDF...")} />
+          <ExportPDFButton reportRef={reportRef} />
           <ShareButton onClick={() => alert("Share link generated")} />
           <RegenerateButton onClick={() => alert("Regenerating with Gemini...")} />
         </div>
@@ -104,7 +109,7 @@ export default function StartupReport() {
 
       <main className="flex-1 p-8 overflow-y-auto">
         <div className="max-w-6xl mx-auto space-y-6">
-          <div className="bg-neutral-900 border border-neutral-800 shadow-lg rounded-xl p-6 transition-all hover:shadow-purple-500/20">
+          <div ref={reportRef}  className="bg-neutral-900 border border-neutral-800 shadow-lg rounded-xl p-6 transition-all hover:shadow-purple-500/20" >
             {loading ? <p>Loading report...</p> : renderPage()}
           </div>
         </div>
