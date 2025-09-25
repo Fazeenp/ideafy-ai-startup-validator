@@ -1,6 +1,5 @@
 import { Routes, Route, useLocation } from "react-router-dom";
 import IdeaForm from "./components/IdeaForm";
-import Results from "./components/Results";
 import Footer from "./components/Footer";
 import Header from "./components/Header";
 import Home from "./pages/Home";
