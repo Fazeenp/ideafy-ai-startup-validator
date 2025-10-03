@@ -3,12 +3,12 @@ import LineChartComponent from "../charts/LineChartComponent";
 
 export default function Financials({ data }) {
   return (
-    <div>
-      <h2 className="text-3xl font-bold mb-6">Financial Projections</h2>
+    <div className="space-y-8 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+      <h2 className="text-3xl sm:text-4xl font-bold mb-6">Financial Projections</h2>
 
       {/* Summary */}
       <section className="mb-8">
-        <h3 className="text-xl font-semibold mb-2">Overview</h3>
+        <h3 className="text-xl sm:text-2xl font-semibold mb-2">Overview</h3>
         <p className="text-neutral-300">
           {data.summary ||
             "The financial outlook suggests profitability within 18-24 months, assuming steady adoption and retention. Break-even is projected by Year 2 with recurring revenue growth from subscriptions."}
@@ -17,7 +17,7 @@ export default function Financials({ data }) {
 
       {/* Revenue Projections */}
       <section className="mb-8">
-        <h3 className="text-xl font-semibold mb-2">Revenue Projection (3 Years)</h3>
+        <h3 className="text-xl sm:text-2xl font-semibold mb-2">Revenue Projection (3 Years)</h3>
         <LineChartComponent
           data={data.revenue || [
             { year: "Year 1", Revenue: 200000 },
@@ -28,7 +28,7 @@ export default function Financials({ data }) {
       </section>
 
       {/* KPI Metrics */}
-      <section className="grid grid-cols-3 gap-4 mb-8">
+      <section className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mb-8">
         {(
           data.kpis || [
             { label: "CAC", value: "$120" },
@@ -38,18 +38,18 @@ export default function Financials({ data }) {
         ).map((m, i) => (
           <div
             key={i}
-            className="bg-white/10 rounded-xl p-4 flex flex-col items-center"
+            className="bg-white/10 rounded-xl p-4 flex flex-col items-center transition transform hover:scale-105 hover:bg-white/20"
           >
-            <p className="text-lg font-bold">{m.value}</p>
-            <p className="text-sm text-neutral-400">{m.label}</p>
+            <p className="text-lg sm:text-xl font-bold">{m.value}</p>
+            <p className="text-sm sm:text-base text-neutral-400">{m.label}</p>
           </div>
         ))}
       </section>
 
       {/* Financial Insights */}
       <section className="bg-yellow-900/40 p-6 rounded-xl">
-        <h3 className="text-xl font-semibold mb-2">Insights</h3>
-        <ul className="list-disc list-inside text-neutral-200 space-y-1">
+        <h3 className="text-xl sm:text-2xl font-semibold mb-2">Insights</h3>
+        <ul className="list-disc list-inside text-neutral-200 space-y-2">
           <li>Strong LTV-to-CAC ratio indicates scalability.</li>
           <li>Initial burn is sustainable with seed funding.</li>
           <li>Upsell potential could increase revenue per user.</li>

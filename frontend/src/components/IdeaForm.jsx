@@ -7,6 +7,7 @@ export default function IdeaForm({ onSubmit }) {
   const [currentStep, setCurrentStep] = useState(1);
   const totalSteps = 4;
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
     businessName: "",
     industry: "",
@@ -22,21 +23,21 @@ export default function IdeaForm({ onSubmit }) {
 
   const handleInputChange = (field, value) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
-    
+
   };
 
-   const handleSubmit = async() => {
+  const handleSubmit = async () => {
     try {
-      const response = await axios.post('https://ideafy-ai-startup-validator-backend.onrender.com/api/validate-startup',formData)
+      const response = await axios.post('https://ideafy-ai-startup-validator-backend.onrender.com/api/validate-startup', formData)
       const resultData = response.data;
       navigate("/startupreport", { state: { idea: formData, result: resultData } });
     } catch (error) {
-       console.error("Failed to validate idea:", error);
-        alert("Something went wrong! Please try again.");
+      console.error("Failed to validate idea:", error);
+      alert("Something went wrong! Please try again.");
+    } finally {
+      setLoading(false); // stop loading
     }
-    
-    
-    
+
   };
   const handlePrevious = () => {
     if (currentStep > 1) setCurrentStep(currentStep - 1);
@@ -274,7 +275,7 @@ export default function IdeaForm({ onSubmit }) {
             type="button"
             onClick={handlePrevious}
             disabled={currentStep === 1}
-            className="flex items-center gap-2 px-6 py-3 rounded-full text-white/80 hover:text-white hover:bg-white/10 disabled:opacity-40 disabled:cursor-not-allowed transition cursor-pointer" 
+            className="flex items-center gap-2 px-6 py-3 rounded-full text-white/80 hover:text-white hover:bg-white/10 disabled:opacity-40 disabled:cursor-not-allowed transition cursor-pointer"
           >
             <ArrowLeft className="h-4 w-4" /> Previous
           </button>
@@ -292,10 +293,35 @@ export default function IdeaForm({ onSubmit }) {
             <button
               type="button"
               onClick={handleSubmit}
-              disabled={!isStepValid()}
+              disabled={!isStepValid() || loading}
               className="flex items-center gap-2 px-8 py-3 rounded-full text-white hover:text-white bg-gradient-to-r from-purple-600 via-pink-500 to-purple-400 disabled:opacity-40 disabled:cursor-not-allowed transition transform hover:scale-105 cursor-pointer"
             >
-              <CheckCircle className="h-4 w-4" /> Validate Idea
+              {loading ? (
+                <svg
+                  className="animate-spin h-5 w-5 text-white"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                >
+                  <circle
+                    className="opacity-25"
+                    cx="12"
+                    cy="12"
+                    r="10"
+                    stroke="currentColor"
+                    strokeWidth="4"
+                  ></circle>
+                  <path
+                    className="opacity-75"
+                    fill="currentColor"
+                    d="M4 12a8 8 0 018-8v8z"
+                  ></path>
+                </svg>
+              ) : (
+                <>
+                  <CheckCircle className="h-4 w-4" /> Validate Idea
+                </>
+              )}
             </button>
           )}
         </div>

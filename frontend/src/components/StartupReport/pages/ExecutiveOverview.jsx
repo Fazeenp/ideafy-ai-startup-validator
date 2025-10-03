@@ -15,24 +15,26 @@ export default function ExecutiveOverview({ data }) {
       </section>
 
       {/* Key Metrics Snapshot */}
-      <section className="grid grid-cols-4 gap-4 mb-8">
+      {/* Key Metrics Snapshot */}
+      <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
         {(
           data.metrics || [
-            { label: "Market Size", value: "$2.3B" },
-            { label: "Growth Rate", value: "12% CAGR" },
-            { label: "Competition Level", value: "Medium" },
-            { label: "Funding Potential", value: "High" },
+            { label: "Market Size", value: "$2.3 Billion in potential market" },
+            { label: "Growth Rate", value: "12% CAGR projected over 5 years" },
+            { label: "Competition Level", value: "Medium competition with niche opportunities" },
+            { label: "Funding Potential", value: "High potential with investor interest" },
           ]
         ).map((m, i) => (
           <div
             key={i}
-            className="bg-white/10 rounded-xl p-4 flex flex-col items-center"
+            className="bg-white/10 rounded-xl p-4 flex flex-col items-center text-center break-words min-w-0"
           >
-            <p className="text-lg font-bold">{m.value}</p>
-            <p className="text-sm text-neutral-400">{m.label}</p>
+            <p className="text-lg font-bold break-words">{m.value}</p>
+            <p className="text-sm text-neutral-400 break-words">{m.label}</p>
           </div>
         ))}
       </section>
+
 
       {/* Highlights */}
       <section className="bg-indigo-900/40 p-6 rounded-xl">
