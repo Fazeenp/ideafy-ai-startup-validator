@@ -1,6 +1,5 @@
 import React from "react";
 import { Hero } from "../components/Hero";
-import Header from "../components/Header";
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
@@ -21,7 +20,7 @@ export default function Home() {
 
   return (
     <div className="bg-gradient-to-b from-gray-900 via-black to-gray-900 text-white font-sans">
-      <Header />
+      
 
       {/* Hero Section */}
       <Hero />

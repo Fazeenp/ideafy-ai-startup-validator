@@ -8,6 +8,8 @@ import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import Dashboard from "./pages/Dashboard";
 import StartupReport from "./components/StartupReport/StartupReport";
+import About from "./pages/About";
+import Pricing from "./pages/Pricing";
 
 function App() {
   const location = useLocation();
@@ -15,7 +17,7 @@ function App() {
   const hideHeader = hideHeaderPaths.includes(location.pathname);
 
   return (
-    <div className="min-h-screen bg-black text-white">
+    <div className="min-h-screen bg-black text-white overflow-x-hidden">
       {!hideHeader && <Header />}
       <ScrollToTop />
       <Routes>
@@ -24,6 +26,8 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/about" element={<About/>}/>
+        <Route path="/pricing" element={<Pricing/>}/>
         <Route path="/startupreport" element={<StartupReport />} />
       </Routes>
       <Footer />

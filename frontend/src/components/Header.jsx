@@ -9,7 +9,6 @@ export default function SleekHeader() {
   const navigate = useNavigate();
 
   const links = [
-    { name: "Solutions", to: "/solution" },
     { name: "Pricing", to: "/pricing" },
     { name: "Our Story", to: "/about" },
   ];
