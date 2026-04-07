@@ -101,7 +101,7 @@ export default function Home() {
           </p>
           <motion.div whileHover={{ scale: 1.05 }} className="inline-block">
             <Link
-              to="/form"
+              to="/signup  "
               className="px-12 py-5 rounded-full bg-gradient-to-r from-yellow-400 via-pink-500 to-purple-500 text-black font-extrabold inline-flex items-center gap-3 text-lg shadow-lg transition-transform"
             >
               Try It Now <ArrowRight className="h-5 w-5" />

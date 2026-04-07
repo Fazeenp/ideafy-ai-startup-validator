@@ -111,10 +111,10 @@ Return only valid JSON.
     const result = await model.generateContent(prompt);
     let text = result.response.text();
 
-    // Clean code fences if any
+    
     text = text.replace(/```json|```/g, "").trim();
 
-    // Parse JSON
+    
     const data = JSON.parse(text);
 
     res.json(data);

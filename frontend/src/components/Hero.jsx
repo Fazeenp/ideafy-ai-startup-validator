@@ -49,7 +49,7 @@ export function Hero({ onStartValidation }) {
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
             <motion.button
-              onClick={()=>navigate('/form')}
+              onClick={()=>navigate('/signup')}
               whileHover={{ scale: 1.05 }}
               className="group relative inline-flex items-center justify-center px-8 py-3 font-semibold rounded-full text-lg bg-gradient-to-r from-yellow-400 via-pink-500 to-purple-500 shadow-lg overflow-hidden cursor-pointer"
             >

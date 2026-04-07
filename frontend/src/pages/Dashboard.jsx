@@ -1,4 +1,4 @@
-import React from "react";
+  import React from "react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Lightbulb, TrendingUp, Shield, Target } from "lucide-react";
