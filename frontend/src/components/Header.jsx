@@ -12,12 +12,12 @@ export default function SleekHeader() {
     { name: "Pricing", to: "/pricing" },
     { name: "Our Story", to: "/about" },
   ];
-
+  const isLoggedIn = !!localStorage.getItem("token");
   return (
     <header className="fixed top-6 left-1/2 transform -translate-x-1/2 z-50 w-full max-w-4xl">
       {/* Floating nav container */}
       <div className="flex justify-between items-center px-6 h-14 backdrop-blur-xl bg-black/40 border border-white/10 rounded-full shadow-lg">
-        
+
         {/* Logo */}
         <div className="flex items-center space-x-2">
           <img
@@ -45,12 +45,32 @@ export default function SleekHeader() {
               {link.name}
             </Link>
           ))}
-          <Link
-            to="/login"
-            className="px-4 py-1 rounded-full font-semibold bg-gradient-to-r from-yellow-400 via-pink-500 to-purple-500 text-black shadow hover:scale-105 transition-transform cursor-pointer"
-          >
-            Get Started
-          </Link>
+          {isLoggedIn ? (
+            <>
+              <Link
+                to="/dashboard"
+                className="text-white/80 hover:text-yellow-400 font-medium transition-colors"
+              >
+                Dashboard
+              </Link>
+
+              <button
+                onClick={() => {
+                  localStorage.removeItem("token");
+                  window.location.href = "/";
+                }}
+                className="text-sm md:text-sm font-extrabold bg-orange-300  text-black rounded-3xl p-2 cursor-pointer"    >
+                Logout
+              </button>
+            </>
+          ) : (
+            <Link
+              to="/login"
+              className="px-4 py-1 rounded-full font-semibold bg-gradient-to-r from-yellow-400 via-pink-500 to-purple-500 text-black shadow hover:scale-105 transition-transform cursor-pointer"
+            >
+              Get Started
+            </Link>
+          )}
         </nav>
 
         {/* Mobile Menu Toggle */}
@@ -97,13 +117,36 @@ export default function SleekHeader() {
                   {link.name}
                 </Link>
               ))}
-              <Link
-                to="/form"
-                onClick={() => setIsOpen(false)}
-                className="mt-6 px-6 py-2 rounded-full bg-gradient-to-r from-yellow-400 via-pink-500 to-purple-500 text-black font-semibold text-center shadow hover:scale-105 transition-transform"
-              >
-                Get Started
-              </Link>
+              {isLoggedIn ? (
+  <>
+    <Link
+      to="/dashboard"
+      onClick={() => setIsOpen(false)}
+      className="block px-3 py-3 rounded hover:text-yellow-400"
+    >
+      Dashboard
+    </Link>
+
+    <button
+      onClick={() => {
+        localStorage.removeItem("token");
+        setIsOpen(false);
+        navigate("/");
+      }}
+      className="mt-6 px-6 py-2 rounded-full bg-red-500 text-white font-semibold"
+    >
+      Logout
+    </button>
+  </>
+) : (
+  <Link
+    to="/login"
+    onClick={() => setIsOpen(false)}
+    className="mt-6 px-6 py-2 rounded-full bg-gradient-to-r from-yellow-400 via-pink-500 to-purple-500 text-black font-semibold text-center"
+  >
+    Get Started
+  </Link>
+)}
             </nav>
           </motion.div>
         )}

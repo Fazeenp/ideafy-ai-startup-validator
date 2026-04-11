@@ -25,7 +25,16 @@ function App() {
         <Route path="/form" element={<IdeaForm />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
-        <Route path="/dashboard" element={<Dashboard />} />
+        <Route
+  path="/dashboard"
+  element={
+    localStorage.getItem("token") ? (
+      <Dashboard />
+    ) : (
+      <Login />
+    )
+  }
+/>
         <Route path="/about" element={<About/>}/>
         <Route path="/pricing" element={<Pricing/>}/>
         <Route path="/startupreport" element={<StartupReport />} />

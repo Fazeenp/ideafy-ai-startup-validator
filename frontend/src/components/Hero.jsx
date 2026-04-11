@@ -11,10 +11,10 @@ export function Hero({ onStartValidation }) {
     { title: "AI Guidance", icon: <Lightbulb className="h-5 w-5 text-white" />, color: "from-blue-400 to-blue-300" },
   ];
   const navigate = useNavigate()
-
+  const isLoggedIn = !!localStorage.getItem("token");
   return (
     <section className="relative overflow-hidden bg-gradient-to-b from-black via-gray-900 to-black text-white">
-      
+
       {/* Animated gradient blobs */}
       <motion.div
         animate={{ rotate: [0, 15, 0] }}
@@ -33,7 +33,7 @@ export function Hero({ onStartValidation }) {
       />
 
       <div className="relative max-w-7xl mx-auto px-6 lg:px-8 py-32 flex flex-col-reverse md:flex-row items-center gap-16">
-        
+
         {/* Left Column */}
         <div className="md:w-1/2 text-center md:text-left z-10">
           <span className="inline-block mb-4 px-4 py-1 bg-white/10 backdrop-blur-sm rounded-full text-sm font-medium">
@@ -49,12 +49,18 @@ export function Hero({ onStartValidation }) {
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
             <motion.button
-              onClick={()=>navigate('/signup')}
+              onClick={() => {
+                if (isLoggedIn) {
+                  navigate("/form");
+                } else {
+                  navigate("/signup");
+                }
+              }}
               whileHover={{ scale: 1.05 }}
               className="group relative inline-flex items-center justify-center px-8 py-3 font-semibold rounded-full text-lg bg-gradient-to-r from-yellow-400 via-pink-500 to-purple-500 shadow-lg overflow-hidden cursor-pointer"
             >
               <span className="relative z-10 flex items-center gap-2">
-                Try It Now
+                {isLoggedIn ? "Go to Dashboard" : "Try It Now"}
                 <ArrowRight className="h-5 w-5 group-hover:translate-x-2 transition-transform" />
               </span>
               <span className="absolute inset-0 bg-white/10 rounded-full animate-ping"></span>

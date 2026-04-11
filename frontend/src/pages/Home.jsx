@@ -2,7 +2,7 @@ import React from "react";
 import { Hero } from "../components/Hero";
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function Home() {
   const features = [
@@ -17,10 +17,11 @@ export default function Home() {
     { step: 2, title: "AI Analysis", desc: "Our AI predicts market potential and risks." },
     { step: 3, title: "Get Insights", desc: "Receive actionable validation instantly." },
   ];
-
+  const isLoggedIn = !!localStorage.getItem("token");
+  const navigate = useNavigate();
   return (
     <div className="bg-gradient-to-b from-gray-900 via-black to-gray-900 text-white font-sans">
-      
+
 
       {/* Hero Section */}
       <Hero />
@@ -100,12 +101,18 @@ export default function Home() {
             Start your journey today and turn your idea into reality.
           </p>
           <motion.div whileHover={{ scale: 1.05 }} className="inline-block">
-            <Link
-              to="/signup  "
-              className="px-12 py-5 rounded-full bg-gradient-to-r from-yellow-400 via-pink-500 to-purple-500 text-black font-extrabold inline-flex items-center gap-3 text-lg shadow-lg transition-transform"
+            <div
+              onClick={() => {
+                if (isLoggedIn) {
+                  navigate("/form");
+                } else {
+                  navigate("/signup");
+                }
+              }}
+              className="px-12 py-5 rounded-full bg-gradient-to-r from-yellow-400 via-pink-500 to-purple-500 text-black font-extrabold inline-flex items-center gap-3 text-lg shadow-lg transition-transform cursor-pointer"
             >
               Try It Now <ArrowRight className="h-5 w-5" />
-            </Link>
+            </div>
           </motion.div>
         </div>
       </section>
