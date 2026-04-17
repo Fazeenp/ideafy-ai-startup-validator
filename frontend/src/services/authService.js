@@ -10,4 +10,4 @@ export const login = async (data) => {
 export const signup = async (data) => {
   const res = await axios.post(`${API_URL}/signup`, data);
   return res.data;
-};
+};  

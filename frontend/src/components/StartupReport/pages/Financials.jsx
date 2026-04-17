@@ -10,7 +10,7 @@ export default function Financials({ data }) {
       <section className="mb-8">
         <h3 className="text-xl sm:text-2xl font-semibold mb-2">Overview</h3>
         <p className="text-neutral-300">
-          {data.summary ||
+          {data?.summary ||
             "The financial outlook suggests profitability within 18-24 months, assuming steady adoption and retention. Break-even is projected by Year 2 with recurring revenue growth from subscriptions."}
         </p>
       </section>
@@ -19,7 +19,7 @@ export default function Financials({ data }) {
       <section className="mb-8">
         <h3 className="text-xl sm:text-2xl font-semibold mb-2">Revenue Projection (3 Years)</h3>
         <LineChartComponent
-          data={data.revenue || [
+          data={data?.revenue || [
             { year: "Year 1", Revenue: 200000 },
             { year: "Year 2", Revenue: 750000 },
             { year: "Year 3", Revenue: 2000000 },
@@ -30,7 +30,7 @@ export default function Financials({ data }) {
       {/* KPI Metrics */}
       <section className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mb-8">
         {(
-          data.kpis || [
+          data?.kpis || [
             { label: "CAC", value: "$120" },
             { label: "LTV", value: "$1,800" },
             { label: "Burn Rate", value: "$30K/mo" },

@@ -51,7 +51,7 @@ export function Hero({ onStartValidation }) {
             <motion.button
               onClick={() => {
                 if (isLoggedIn) {
-                  navigate("/form");
+                  navigate("/dashboard");
                 } else {
                   navigate("/signup");
                 }

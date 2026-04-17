@@ -9,14 +9,14 @@ export default function Recommendations({ data }) {
       <section className="mb-8">
         <h3 className="text-xl sm:text-2xl font-semibold mb-2">Overview</h3>
         <p className="text-neutral-300">
-          {data.summary ||
+          {data?.summary ||
             "To succeed, the startup should focus on niche differentiation, building partnerships, and refining its pricing model. Early-stage focus should remain on user growth while preparing for seed funding."}
         </p>
       </section>
 
       {/* Action Plan */}
       <section className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
-        {(data.actions || [
+        {(data?.actions || [
           {
             title: "Product",
             tasks: ["Launch MVP", "Prioritize integrations", "Refine UX"],

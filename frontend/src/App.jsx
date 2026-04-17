@@ -13,9 +13,8 @@ import Pricing from "./pages/Pricing";
 
 function App() {
   const location = useLocation();
-  const hideHeaderPaths = ["/startupreport"]; // add more paths if needed
+  const hideHeaderPaths = ["/idea"];
   const hideHeader = hideHeaderPaths.includes(location.pathname);
-
   return (
     <div className="min-h-screen bg-black text-white overflow-x-hidden">
       {!hideHeader && <Header />}
@@ -26,18 +25,18 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
         <Route
-  path="/dashboard"
-  element={
-    localStorage.getItem("token") ? (
-      <Dashboard />
-    ) : (
-      <Login />
-    )
-  }
-/>
-        <Route path="/about" element={<About/>}/>
-        <Route path="/pricing" element={<Pricing/>}/>
-        <Route path="/startupreport" element={<StartupReport />} />
+          path="/dashboard"
+          element={
+            localStorage.getItem("token") ? (
+              <Dashboard />
+            ) : (
+              <Login />
+            )
+          }
+        />
+        <Route path="/about" element={<About />} />
+        <Route path="/pricing" element={<Pricing />} />
+        <Route path="/ideas/:id" element={<StartupReport />} />
       </Routes>
       <Footer />
     </div>

@@ -9,7 +9,7 @@ export default function ExecutiveOverview({ data }) {
       <section className="mb-8">
         <h3 className="text-xl font-semibold mb-2">Summary</h3>
         <p className="text-neutral-300 leading-relaxed">
-          {data.summary ||
+          {data?.summary ||
             "This report provides a holistic evaluation of your startup idea. It covers the market opportunity, competition, product viability, financial potential, and strategic recommendations. Based on preliminary analysis, your concept shows strong feasibility with room for refinement in product positioning."}
         </p>
       </section>
@@ -18,7 +18,7 @@ export default function ExecutiveOverview({ data }) {
       {/* Key Metrics Snapshot */}
       <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
         {(
-          data.metrics || [
+          data?.metrics || [
             { label: "Market Size", value: "$2.3 Billion in potential market" },
             { label: "Growth Rate", value: "12% CAGR projected over 5 years" },
             { label: "Competition Level", value: "Medium competition with niche opportunities" },

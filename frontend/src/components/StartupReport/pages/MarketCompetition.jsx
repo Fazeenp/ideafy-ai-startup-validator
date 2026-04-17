@@ -12,7 +12,7 @@ export default function MarketCompetition({ data }) {
       <section className="mb-8">
         <h3 className="text-xl sm:text-2xl font-semibold mb-2">Executive Summary</h3>
         <p className="text-neutral-300 leading-relaxed">
-          {data.summary ||
+          {data?.summary ||
             "The market for AI-driven SaaS products is rapidly expanding with a CAGR of 12%. Competition is concentrated among three major players, while several smaller startups are entering the space with niche offerings."}
         </p>
       </section>
@@ -25,7 +25,7 @@ export default function MarketCompetition({ data }) {
           <div className="bg-white/10 p-4 rounded-xl transition transform hover:scale-105 hover:bg-white/20">
             <h4 className="font-semibold mb-2 text-lg sm:text-xl">Market Share Distribution</h4>
             <PieChartComponent
-              data={data.stats || [
+              data={data?.stats || [
                 { name: "Competitor A", value: 45 },
                 { name: "Competitor B", value: 25 },
                 { name: "Competitor C", value: 20 },
@@ -38,7 +38,9 @@ export default function MarketCompetition({ data }) {
           <div className="bg-white/10 p-4 rounded-xl transition transform hover:scale-105 hover:bg-white/20">
             <h4 className="font-semibold mb-2 text-lg sm:text-xl">Growth Drivers</h4>
             <ul className="list-disc list-inside text-neutral-300 space-y-1">
-              {data.drivers?.map((d, i) => <li key={i}>{d}</li>) || (
+              {data?.drivers?.length ? (
+                data?.drivers.map((d, i) => <li key={i}>{d}</li>)
+              ) : (
                 <>
                   <li>Increased adoption of SaaS in SMEs</li>
                   <li>Advancements in AI automation</li>
@@ -54,7 +56,7 @@ export default function MarketCompetition({ data }) {
       <section className="mb-8">
         <h3 className="text-xl sm:text-2xl font-semibold mb-4">Key Competitors</h3>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-          {(data.competitors || [
+          {(data?.competitors || [
             { name: "Competitor A", detail: "Strong in enterprise adoption." },
             { name: "Competitor B", detail: "Innovates with niche features." },
             { name: "Competitor C", detail: "Low-cost alternative." },
@@ -71,7 +73,7 @@ export default function MarketCompetition({ data }) {
       <section className="mb-8">
         <h3 className="text-xl sm:text-2xl font-semibold mb-2">Competitive Advantage Radar</h3>
         <RadarChartComponent
-          data={data.radar || [
+          data={data?.radar || [
             { aspect: "Pricing", You: 8, Competitors: 6 },
             { aspect: "Innovation", You: 7, Competitors: 8 },
             { aspect: "Support", You: 9, Competitors: 7 },

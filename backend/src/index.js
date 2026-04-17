@@ -2,6 +2,8 @@ const express = require("express");
 const cors = require("cors");
 const connectDB = require("./config/db");
 const authRoute = require("./modules/auth/auth.routes");
+const userRoutes = require("./modules/user/user.routes");
+const ideaRoutes = require("./modules/idea/idea.routes");
 const dotenv = require("dotenv");
 
 dotenv.config();
@@ -18,6 +20,9 @@ connectDB();
 
 // routes
 app.use("/api/auth", authRoute);
+app.use("/api/user",userRoutes);
+// IDEA ROUTES 🚀
+app.use("/api/ideas", ideaRoutes);
 
 // health check (VERY IMPORTANT for debugging)
 app.get("/", (req, res) => {

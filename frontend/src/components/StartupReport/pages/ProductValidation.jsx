@@ -10,14 +10,14 @@ export default function ProductValidation({ data }) {
       <section className="mb-8">
         <h3 className="text-xl sm:text-2xl font-semibold mb-2">Overview</h3>
         <p className="text-neutral-300">
-          {data.summary ||
+          {data?.summary ||
             "Your product addresses a real customer pain point with clear demand signals. Preliminary validation shows a 75% positive response rate in surveys. However, feature prioritization and MVP clarity will be critical."}
         </p>
       </section>
 
       {/* Validation Metrics */}
       <section className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mb-8">
-        {(data.metrics || [
+        {(data?.metrics || [
           { label: "Survey Positive", value: "75%" },
           { label: "Waitlist Signups", value: "1,200" },
           { label: "Retention Prediction", value: "68%" },
@@ -36,7 +36,7 @@ export default function ProductValidation({ data }) {
       <section className="mb-8">
         <h3 className="text-xl sm:text-2xl font-semibold mb-2">Feature Interest Over Time</h3>
         <LineChartComponent
-          data={data.trends || [
+          data={data?.trends || [
             { month: "Jan", MVP: 20, Advanced: 10 },
             { month: "Feb", MVP: 30, Advanced: 15 },
             { month: "Mar", MVP: 45, Advanced: 25 },

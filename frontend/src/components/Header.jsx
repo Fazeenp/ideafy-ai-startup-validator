@@ -106,7 +106,7 @@ export default function SleekHeader() {
                 <X className="h-7 w-7 text-white" />
               </button>
             </div>
-            <nav className="flex flex-col gap-4 px-6 py-8 text-lg font-semibold">
+            <nav className="flex flex-col gap-4 px-6 py-8 text-lg font-semibold bg-black">
               {links.map((link, i) => (
                 <Link
                   key={i}
