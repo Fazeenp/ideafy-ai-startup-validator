@@ -1,5 +1,6 @@
 import React, { useRef, useState, useEffect } from "react";
 import {useParams, useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import ExecutiveOverview from "./pages/ExecutiveOverview";
 import MarketCompetition from "./pages/MarketCompetition";
 import ProductValidation from "./pages/ProductValidation";
@@ -21,6 +22,8 @@ export default function StartupReport() {
   const [loading, setLoading] = useState(true);
   const reportRef = useRef();
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const location = useLocation();
+  const isPDF = new URLSearchParams(location.search).get("mode") === "pdf";
   const navItems = [
     { name: "Executive Overview", icon: BarChart3 },
     { name: "Market & Competition", icon: Users },
@@ -121,7 +124,7 @@ export default function StartupReport() {
         </nav>
 
         <div className="p-4 border-t border-neutral-800 space-y-3">
-          <ExportPDFButton reportRef={reportRef} />
+          <ExportPDFButton  />
           <ShareButton onClick={() => alert("Share link generated")} />
           <RegenerateButton
             onClick={async () => {

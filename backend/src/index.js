@@ -4,6 +4,7 @@ const connectDB = require("./config/db");
 const authRoute = require("./modules/auth/auth.routes");
 const userRoutes = require("./modules/user/user.routes");
 const ideaRoutes = require("./modules/idea/idea.routes");
+const pdfRoutes = require("./modules/pdf/pdf.routes");
 const dotenv = require("dotenv");
 
 dotenv.config();
@@ -21,6 +22,8 @@ connectDB();
 // routes
 app.use("/api/auth", authRoute);
 app.use("/api/user",userRoutes);
+//pdf route
+app.use("/api/pdf", pdfRoutes);
 // IDEA ROUTES 🚀
 app.use("/api/ideas", ideaRoutes);
 
