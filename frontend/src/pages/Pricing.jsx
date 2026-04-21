@@ -1,107 +1,229 @@
-import React from "react";
+import React, { useState } from "react";
 import { motion } from "framer-motion";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import { CheckCircle, Zap, Shield, Headphones } from "lucide-react";
+
+axios.defaults.baseURL = "http://localhost:5000";
+
+const PACKS = [
+  {
+    name: "Starter",
+    price: 99,
+    credits: 10,
+    description: "Perfect for testing the waters",
+    features: ["10 idea validations", "Full AI analysis", "PDF export", "7-day access"],
+    highlight: false,
+  },
+  {
+    name: "Builder",
+    price: 199,
+    credits: 25,
+    description: "For serious entrepreneurs",
+    features: ["25 idea validations", "Full AI analysis", "PDF export", "Priority support", "30-day access"],
+    highlight: true,
+  },
+  {
+    name: "Founder",
+    price: 499,
+    credits: 70,
+    description: "Best value for power users",
+    features: ["70 idea validations", "Full AI analysis", "PDF export", "Priority support", "Unlimited access", "Team sharing (coming soon)"],
+    highlight: false,
+  },
+];
 
 export default function Pricing() {
-  const tiers = [
-    {
-      name: "Free",
-      price: "₹0",
-      description: "Perfect for testing ideas",
-      features: ["5 ideas per month", "Basic feasibility score", "Limited insights"],
-      cta: "Get Started",
-    },
-    {
-      name: "Pro",
-      price: "₹749 / mo",
-      description: "For serious innovators",
-      features: ["50 ideas per month", "Detailed AI analysis", "Actionable reports", "Priority support"],
-      cta: "Upgrade Now",
-      highlight: true,
-    },
-    {
-      name: "Enterprise",
-      price: "Contact Us",
-      description: "For teams and custom solutions",
-      features: ["Unlimited ideas", "Team collaboration", "Custom AI model access", "Dedicated support"],
-      cta: "Contact Sales",
-    },
-  ];
+  const navigate = useNavigate();
+  const [loadingPack, setLoadingPack] = useState(null);
+
+  const loadRazorpayScript = () =>
+    new Promise((resolve) => {
+      if (document.getElementById("razorpay-script")) {
+        resolve(true);
+        return;
+      }
+      const script = document.createElement("script");
+      script.id = "razorpay-script";
+      script.src = "https://checkout.razorpay.com/v1/checkout.js";
+      script.onload = () => resolve(true);
+      script.onerror = () => resolve(false);
+      document.body.appendChild(script);
+    });
+
+  const handleBuy = async (pack) => {
+    const token = localStorage.getItem("token");
+    if (!token) {
+      navigate("/login");
+      return;
+    }
+
+    setLoadingPack(pack.price);
+    axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+
+    try {
+      const loaded = await loadRazorpayScript();
+      if (!loaded) {
+        alert("Failed to load Razorpay. Check your internet connection.");
+        return;
+      }
+
+      const { data } = await axios.post("/api/payment/create-order", {
+        amount: pack.price,
+      });
+
+      const options = {
+        key: data.keyId,
+        amount: data.amount,
+        currency: data.currency,
+        name: "Ideafy",
+        description: `${pack.credits} Credits Pack`,
+        order_id: data.orderId,
+        handler: async (response) => {
+          try {
+            const verifyRes = await axios.post("/api/payment/verify", {
+              razorpay_order_id: response.razorpay_order_id,
+              razorpay_payment_id: response.razorpay_payment_id,
+              razorpay_signature: response.razorpay_signature,
+            });
+            alert(`✅ Payment successful! ${verifyRes.data.creditsAdded} credits added.`);
+            navigate("/dashboard");
+          } catch (err) {
+            alert(err.response?.data?.message || "Verification failed. Contact support.");
+          }
+        },
+        prefill: {
+          name: "",
+          email: "",
+        },
+        theme: {
+          color: "#a855f7",
+        },
+        modal: {
+          ondismiss: () => setLoadingPack(null),
+        },
+      };
+
+      const rzp = new window.Razorpay(options);
+      rzp.open();
+    } catch (err) {
+      alert(err.response?.data?.message || "Failed to initiate payment.");
+    } finally {
+      setLoadingPack(null);
+    }
+  };
 
   return (
-    <div className="bg-black text-white min-h-screen overflow-x-hidden font-sans">
-      {/* Hero Section */}
-      <section className="py-20 md:py-32 bg-gradient-to-b from-gray-900 via-gray-900 to-black text-center">
+    <div className="bg-black text-white min-h-screen overflow-x-hidden">
+      {/* Hero */}
+      <section className="pt-28 pb-16 text-center px-6">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-purple-500/10 border border-purple-500/20 text-purple-400 text-sm mb-6"
+        >
+          <Zap className="w-3.5 h-3.5" /> Pay-as-you-go — No subscription
+        </motion.div>
         <h1 className="text-5xl md:text-6xl font-extrabold mb-4">
-          Pricing Plans
+          Buy Credits
         </h1>
-        <p className="text-lg md:text-xl text-white/70 max-w-2xl mx-auto">
-          Simple, transparent pricing in INR, designed for innovators and entrepreneurs.
+        <p className="text-lg text-white/60 max-w-xl mx-auto">
+          Each credit = one full AI-powered startup analysis. Buy once, use anytime.
         </p>
       </section>
 
-      {/* Pricing Cards Section */}
-      <section className="py-20 md:py-32 relative">
-        {/* Smooth Background Blur for Flow */}
-        <div className="absolute inset-0 bg-gradient-to-b from-black via-gray-900 to-black -z-10"></div>
-
-        <div className="max-w-7xl mx-auto px-6 lg:px-8 grid md:grid-cols-3 gap-10">
-          {tiers.map((tier, idx) => (
+      {/* Pricing cards */}
+      <section className="pb-20 px-6">
+        <div className="max-w-5xl mx-auto grid md:grid-cols-3 gap-6">
+          {PACKS.map((pack, i) => (
             <motion.div
-              key={idx}
-              className={`flex flex-col justify-between p-10 rounded-3xl shadow-2xl border border-white/10 transform transition-transform hover:scale-105 ${
-                tier.highlight
-                  ? "bg-gradient-to-r from-yellow-400 via-pink-500 to-purple-500 text-black shadow-pink-500/50"
-                  : "bg-black/20 backdrop-blur-md text-white shadow-white/10"
-              }`}
+              key={pack.price}
               initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: idx * 0.2 }}
+              transition={{ duration: 0.5, delay: i * 0.15 }}
+              className={`relative flex flex-col p-8 rounded-3xl border transition-all duration-300 hover:-translate-y-1 ${
+                pack.highlight
+                  ? "bg-gradient-to-b from-purple-900/50 to-pink-900/30 border-purple-500/40 shadow-lg shadow-purple-500/10"
+                  : "bg-neutral-900/60 border-white/10"
+              }`}
             >
-              <div>
-                <h3 className="font-extrabold text-2xl mb-2">{tier.name}</h3>
-                <p className="text-lg mb-4">{tier.description}</p>
-                <p className="text-4xl font-bold mb-6">{tier.price}</p>
-                <ul className={`mb-8 space-y-3 ${tier.highlight ? "text-black/90" : "text-white/70"}`}>
-                  {tier.features.map((feature, fidx) => (
-                    <li
-                      key={fidx}
-                      className="before:content-['✓'] before:text-green-400 before:mr-2 text-left"
-                    >
-                      {feature}
-                    </li>
-                  ))}
-                </ul>
+              {pack.highlight && (
+                <div className="absolute -top-3 left-1/2 -translate-x-1/2">
+                  <span className="px-4 py-1 rounded-full text-xs font-bold bg-gradient-to-r from-yellow-400 via-pink-500 to-purple-500 text-black">
+                    MOST POPULAR
+                  </span>
+                </div>
+              )}
+
+              <div className="mb-6">
+                <h3 className="text-xl font-bold mb-1">{pack.name}</h3>
+                <p className="text-white/50 text-sm">{pack.description}</p>
               </div>
+
+              <div className="mb-6">
+                <div className="flex items-baseline gap-2">
+                  <span className="text-4xl font-extrabold">₹{pack.price}</span>
+                  <span className="text-white/40 text-sm">one-time</span>
+                </div>
+                <div className="mt-2 inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-green-400/10 border border-green-400/20">
+                  <CheckCircle className="w-3.5 h-3.5 text-green-400" />
+                  <span className="text-green-400 text-xs font-medium">{pack.credits} credits</span>
+                </div>
+              </div>
+
+              <ul className="space-y-3 mb-8 flex-1">
+                {pack.features.map((f, fi) => (
+                  <li key={fi} className="flex items-center gap-2.5 text-sm text-white/70">
+                    <CheckCircle className="w-4 h-4 text-green-400 shrink-0" />
+                    {f}
+                  </li>
+                ))}
+              </ul>
+
               <motion.button
-                whileHover={{ scale: 1.05 }}
-                className={`px-8 py-4 rounded-full font-bold shadow-lg transition-transform cursor-pointer ${
-                  tier.highlight
-                    ? "bg-black text-white"
-                    : "bg-gradient-to-r from-yellow-400 via-pink-500 to-purple-500 text-black "
+                whileHover={{ scale: 1.03 }}
+                whileTap={{ scale: 0.97 }}
+                onClick={() => handleBuy(pack)}
+                disabled={loadingPack === pack.price}
+                className={`w-full py-3 rounded-2xl font-bold text-sm transition-all
+                  disabled:opacity-50 disabled:cursor-not-allowed ${
+                  pack.highlight
+                    ? "bg-gradient-to-r from-yellow-400 via-pink-500 to-purple-500 text-black"
+                    : "bg-white/10 hover:bg-white/20 text-white border border-white/10"
                 }`}
               >
-                {tier.cta}
+                {loadingPack === pack.price ? (
+                  <span className="flex items-center justify-center gap-2">
+                    <div className="w-4 h-4 border-2 border-current border-t-transparent rounded-full animate-spin" />
+                    Processing...
+                  </span>
+                ) : (
+                  `Buy for ₹${pack.price}`
+                )}
               </motion.button>
             </motion.div>
           ))}
         </div>
       </section>
 
-      {/* Call-to-Action Section */}
-      <section className="py-20 md:py-32 bg-gradient-to-b from-gray-900 via-black to-gray-900 text-center">
-        <h2 className="text-4xl md:text-5xl font-extrabold mb-6">
-          Ready to Validate Your Ideas?
-        </h2>
-        <p className="text-white/70 text-lg md:text-xl mb-12 max-w-2xl mx-auto">
-          Start your journey today and turn your ideas into successful startups with AI-powered insights.
-        </p>
-        <motion.button
-          whileHover={{ scale: 1.05 }}
-          className="px-12 py-5 rounded-full bg-gradient-to-r from-yellow-400 via-pink-500 to-purple-500 text-black font-extrabold text-lg shadow-lg transition-transform cursor-pointer"
-        >
-          Try It Now
-        </motion.button>
+      {/* Trust signals */}
+      <section className="py-16 border-t border-white/5">
+        <div className="max-w-4xl mx-auto px-6 grid sm:grid-cols-3 gap-8 text-center">
+          {[
+            { icon: Shield,      title: "Secure Payments",    desc: "256-bit SSL encryption via Razorpay" },
+            { icon: Zap,         title: "Instant Credits",    desc: "Credits added immediately after payment" },
+            { icon: Headphones,  title: "Support",            desc: "Email support within 24 hours" },
+          ].map(({ icon: Icon, title, desc }) => (
+            <div key={title} className="flex flex-col items-center gap-3">
+              <div className="p-3 rounded-2xl bg-white/5">
+                <Icon className="w-5 h-5 text-purple-400" />
+              </div>
+              <h4 className="font-semibold text-sm">{title}</h4>
+              <p className="text-white/40 text-xs">{desc}</p>
+            </div>
+          ))}
+        </div>
       </section>
     </div>
   );

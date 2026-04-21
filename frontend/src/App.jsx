@@ -13,7 +13,7 @@ import Pricing from "./pages/Pricing";
 
 function App() {
   const location = useLocation();
-  const hideHeaderPaths = ["/idea"];
+  const hideHeaderPaths = ["/idea", "/dashboard"];
   const hideHeader = hideHeaderPaths.includes(location.pathname);
   return (
     <div className="min-h-screen bg-black text-white overflow-x-hidden">

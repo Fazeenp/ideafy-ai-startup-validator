@@ -1,10 +1,16 @@
+const User = require("../user/user.model");
 const ideaService = require("./idea.service");
 
 const createIdea = async (req, res) => {
   try {
     console.log("🔥 Incoming request body:", req.body);
-
+    const user = await User.findById(userId);
+     if (!user) return res.status(404).json({ message: "User not found" });
+    if (user.credits <= 0) {
+      return res.status(403).json({ message: "No credits left. Please buy more credits." });
+    }
     const idea = await ideaService.createIdea(req.user.id, req.body);
+    await User.findByIdAndUpdate(userId, { $inc: { credits: -1 } });
 
     res.status(201).json({
       success: true,

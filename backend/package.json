@@ -23,6 +23,7 @@
     "mongodb": "^6.19.0",
     "mongoose": "^8.18.0",
     "puppeteer": "^24.41.0",
+    "razorpay": "^2.9.6",
     "zod": "^4.1.3"
   }
 }
