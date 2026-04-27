@@ -10,6 +10,7 @@ import Dashboard from "./pages/Dashboard";
 import StartupReport from "./components/StartupReport/StartupReport";
 import About from "./pages/About";
 import Pricing from "./pages/Pricing";
+import Demo from "./pages/Demo";
 
 function App() {
   const location = useLocation();
@@ -37,6 +38,7 @@ function App() {
         <Route path="/about" element={<About />} />
         <Route path="/pricing" element={<Pricing />} />
         <Route path="/ideas/:id" element={<StartupReport />} />
+        <Route path="/demo" element={<Demo/>}/>
       </Routes>
       <Footer />
     </div>

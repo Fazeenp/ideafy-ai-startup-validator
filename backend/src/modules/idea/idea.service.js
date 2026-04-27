@@ -1,5 +1,10 @@
 const Idea = require("./idea.model");
 const { validateStartup } = require("./idea.ai.service");
+const normalizeStatus = (status, score) => {
+  if (score >= 75) return "Validated";
+  if (score >= 40) return "In Progress";
+  return "Rejected";
+};
 
 const createIdea = async (userId, data) => {
 

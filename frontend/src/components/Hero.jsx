@@ -140,6 +140,7 @@ export function Hero({ onStartValidation }) {
                 whileHover={{ scale: 1.03 }}
                 whileTap={{ scale: 0.97 }}
                 className="flex items-center justify-center gap-2 px-7 py-3.5 rounded-2xl font-medium text-white/70 bg-white/5 border border-white/10 hover:bg-white/8 hover:text-white transition-all duration-200 text-sm cursor-pointer"
+                onClick={()=>{navigate("/demo")}}
               >
                 View Demo
               </motion.button>

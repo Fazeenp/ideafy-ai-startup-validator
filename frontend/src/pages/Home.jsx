@@ -431,7 +431,7 @@ export default function Home() {
                   View Pricing <ChevronRight className="w-4 h-4" />
                 </motion.button>
               </div>
-              <p className="text-white/25 text-xs mt-6">3 free credits on signup · No card required</p>
+              <p className="text-white/25 text-xs mt-6">5 free credits on signup · No card required</p>
             </div>
           </motion.div>
         </div>
