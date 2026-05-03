@@ -4,7 +4,9 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { CheckCircle, Zap, Shield, Headphones } from "lucide-react";
 
-axios.defaults.baseURL = "http://localhost:5000";
+import API_URL from "../config/apiConfig";
+
+axios.defaults.baseURL = API_URL;
 
 const PACKS = [
   {
@@ -142,11 +144,10 @@ export default function Pricing() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: i * 0.15 }}
-              className={`relative flex flex-col p-8 rounded-3xl border transition-all duration-300 hover:-translate-y-1 ${
-                pack.highlight
+              className={`relative flex flex-col p-8 rounded-3xl border transition-all duration-300 hover:-translate-y-1 ${pack.highlight
                   ? "bg-gradient-to-b from-purple-900/50 to-pink-900/30 border-purple-500/40 shadow-lg shadow-purple-500/10"
                   : "bg-neutral-900/60 border-white/10"
-              }`}
+                }`}
             >
               {pack.highlight && (
                 <div className="absolute -top-3 left-1/2 -translate-x-1/2">
@@ -187,11 +188,10 @@ export default function Pricing() {
                 onClick={() => handleBuy(pack)}
                 disabled={loadingPack === pack.price}
                 className={`w-full py-3 rounded-2xl font-bold text-sm transition-all
-                  disabled:opacity-50 disabled:cursor-not-allowed ${
-                  pack.highlight
+                  disabled:opacity-50 disabled:cursor-not-allowed ${pack.highlight
                     ? "bg-gradient-to-r from-yellow-400 via-pink-500 to-purple-500 text-black"
                     : "bg-white/10 hover:bg-white/20 text-white border border-white/10"
-                }`}
+                  }`}
               >
                 {loadingPack === pack.price ? (
                   <span className="flex items-center justify-center gap-2">
@@ -211,9 +211,9 @@ export default function Pricing() {
       <section className="py-16 border-t border-white/5">
         <div className="max-w-4xl mx-auto px-6 grid sm:grid-cols-3 gap-8 text-center">
           {[
-            { icon: Shield,      title: "Secure Payments",    desc: "256-bit SSL encryption via Razorpay" },
-            { icon: Zap,         title: "Instant Credits",    desc: "Credits added immediately after payment" },
-            { icon: Headphones,  title: "Support",            desc: "Email support within 24 hours" },
+            { icon: Shield, title: "Secure Payments", desc: "256-bit SSL encryption via Razorpay" },
+            { icon: Zap, title: "Instant Credits", desc: "Credits added immediately after payment" },
+            { icon: Headphones, title: "Support", desc: "Email support within 24 hours" },
           ].map(({ icon: Icon, title, desc }) => (
             <div key={title} className="flex flex-col items-center gap-3">
               <div className="p-3 rounded-2xl bg-white/5">

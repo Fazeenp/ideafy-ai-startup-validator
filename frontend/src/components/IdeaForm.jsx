@@ -4,7 +4,9 @@ import { ArrowRight, ArrowLeft, CheckCircle, Building2, Layers, Target, Rocket }
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
-axios.defaults.baseURL = "http://localhost:5000";
+import API_URL from "../config/apiConfig";
+
+axios.defaults.baseURL = API_URL;
 
 const token = localStorage.getItem("token");
 if (token) axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
@@ -289,13 +291,12 @@ export default function IdeaForm({ onSubmit }) {
             return (
               <React.Fragment key={i}>
                 <div className="flex flex-col items-center gap-1.5">
-                  <div className={`w-9 h-9 rounded-xl flex items-center justify-center transition-all duration-300 ${
-                    isDone
+                  <div className={`w-9 h-9 rounded-xl flex items-center justify-center transition-all duration-300 ${isDone
                       ? "bg-green-400/15 border border-green-400/30"
                       : isActive
-                      ? "bg-gradient-to-br from-purple-500/30 to-pink-500/30 border border-purple-400/40"
-                      : "bg-white/4 border border-white/8"
-                  }`}>
+                        ? "bg-gradient-to-br from-purple-500/30 to-pink-500/30 border border-purple-400/40"
+                        : "bg-white/4 border border-white/8"
+                    }`}>
                     {isDone
                       ? <CheckCircle className="w-4 h-4 text-green-400" />
                       : <Icon className={`w-4 h-4 ${isActive ? "text-purple-300" : "text-white/25"}`} />
@@ -306,9 +307,8 @@ export default function IdeaForm({ onSubmit }) {
                   </span>
                 </div>
                 {i < totalSteps - 1 && (
-                  <div className={`flex-1 h-px mx-3 transition-all duration-500 ${
-                    stepNum < currentStep ? "bg-green-400/30" : "bg-white/6"
-                  }`} />
+                  <div className={`flex-1 h-px mx-3 transition-all duration-500 ${stepNum < currentStep ? "bg-green-400/30" : "bg-white/6"
+                    }`} />
                 )}
               </React.Fragment>
             );

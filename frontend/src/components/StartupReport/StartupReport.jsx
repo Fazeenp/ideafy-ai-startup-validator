@@ -13,17 +13,19 @@ import logo from "../../assets/ideafy_logo-removebg-preview.png";
 import { BarChart3, Users, CheckCircle2, Coins, Lightbulb, Book, Menu, X, Home, RefreshCw } from "lucide-react";
 import axios from "axios";
 
-axios.defaults.baseURL = "http://localhost:5000";
+import API_URL from "../../config/apiConfig";
+
+axios.defaults.baseURL = API_URL;
 const token = localStorage.getItem("token");
 if (token) axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
 
 const navItems = [
-  { name: "Executive Overview",     icon: BarChart3,     color: "text-blue-400" },
-  { name: "Market & Competition",   icon: Users,         color: "text-purple-400" },
-  { name: "Product Validation",     icon: CheckCircle2,  color: "text-green-400" },
-  { name: "Financials",             icon: Coins,         color: "text-yellow-400" },
-  { name: "Recommendations",        icon: Lightbulb,     color: "text-pink-400" },
-  { name: "Business Terms Reference", icon: Book,        color: "text-teal-400" },
+  { name: "Executive Overview", icon: BarChart3, color: "text-blue-400" },
+  { name: "Market & Competition", icon: Users, color: "text-purple-400" },
+  { name: "Product Validation", icon: CheckCircle2, color: "text-green-400" },
+  { name: "Financials", icon: Coins, color: "text-yellow-400" },
+  { name: "Recommendations", icon: Lightbulb, color: "text-pink-400" },
+  { name: "Business Terms Reference", icon: Book, color: "text-teal-400" },
 ];
 
 export default function StartupReport() {
@@ -74,13 +76,13 @@ export default function StartupReport() {
   const renderPage = () => {
     if (!reportData) return null;
     switch (activePage) {
-      case "Executive Overview":     return <ExecutiveOverview data={reportData.executiveOverview} />;
-      case "Market & Competition":   return <MarketCompetition data={reportData.marketCompetition} />;
-      case "Product Validation":     return <ProductValidation data={reportData.productValidation} />;
-      case "Financials":             return <Financials data={reportData.financials} />;
-      case "Recommendations":        return <Recommendations data={reportData.recommendations} />;
+      case "Executive Overview": return <ExecutiveOverview data={reportData.executiveOverview} />;
+      case "Market & Competition": return <MarketCompetition data={reportData.marketCompetition} />;
+      case "Product Validation": return <ProductValidation data={reportData.productValidation} />;
+      case "Financials": return <Financials data={reportData.financials} />;
+      case "Recommendations": return <Recommendations data={reportData.recommendations} />;
       case "Business Terms Reference": return <BusinessTermsSaaS />;
-      default:                       return <ExecutiveOverview data={reportData.executiveOverview} />;
+      default: return <ExecutiveOverview data={reportData.executiveOverview} />;
     }
   };
 
@@ -139,11 +141,10 @@ export default function StartupReport() {
             <button
               key={name}
               onClick={() => { setActivePage(name); setSidebarOpen(false); }}
-              className={`w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm transition-all duration-200 ${
-                activePage === name
+              className={`w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm transition-all duration-200 ${activePage === name
                   ? "bg-white/8 text-white border border-white/8"
                   : "text-white/40 hover:text-white hover:bg-white/4"
-              }`}
+                }`}
             >
               <Icon className={`w-4 h-4 shrink-0 ${activePage === name ? color : ""}`} />
               <span className="truncate">{name}</span>
@@ -194,7 +195,7 @@ export default function StartupReport() {
               <p className="text-xs text-white/30 hidden sm:block">AI-generated startup analysis</p>
             </div>
           </div>
-         
+
         </div>
 
         {/* Content */}
