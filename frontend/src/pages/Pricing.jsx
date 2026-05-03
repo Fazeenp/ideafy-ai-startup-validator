@@ -145,8 +145,8 @@ export default function Pricing() {
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: i * 0.15 }}
               className={`relative flex flex-col p-8 rounded-3xl border transition-all duration-300 hover:-translate-y-1 ${pack.highlight
-                  ? "bg-gradient-to-b from-purple-900/50 to-pink-900/30 border-purple-500/40 shadow-lg shadow-purple-500/10"
-                  : "bg-neutral-900/60 border-white/10"
+                ? "bg-gradient-to-b from-purple-900/50 to-pink-900/30 border-purple-500/40 shadow-lg shadow-purple-500/10"
+                : "bg-neutral-900/60 border-white/10"
                 }`}
             >
               {pack.highlight && (

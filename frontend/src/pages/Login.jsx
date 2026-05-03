@@ -10,9 +10,6 @@ export default function Login() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
-  console.log(API_URL);
-
-
   const handleChange = (e) => {
     setError("");
     setForm({ ...form, [e.target.name]: e.target.value });

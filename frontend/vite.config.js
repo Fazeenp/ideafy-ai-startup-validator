@@ -5,9 +5,4 @@ import tailwindcss from "@tailwindcss/vite";
 
 export default defineConfig({
   plugins: [react(), tailwindcss()],
-  server: {
-    proxy: {
-      "/api": process.env.VITE_API_URL || "https://project.alightage.in",
-    },
-  },
 })

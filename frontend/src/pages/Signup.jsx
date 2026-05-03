@@ -11,7 +11,6 @@ export default function Signup() {
   const [error, setError] = useState(null);
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
-  console.log(API_URL);
 
   const handleChange = (e) => {
     setError(null);
