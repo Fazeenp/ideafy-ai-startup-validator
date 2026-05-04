@@ -79,6 +79,9 @@ export default function About() {
     { value: "4.9★", label: "Founder rating" },
   ];
 
+
+  const isLoggedIn = !!localStorage.getItem("token");
+
   return (
     <div className="bg-neutral-950 text-white min-h-screen overflow-x-hidden">
 
@@ -278,7 +281,9 @@ export default function About() {
                 We envision a future where no founder wastes years on ideas that don't fit the market —
                 where AI guidance is as accessible as a Google search, and every great idea gets the chance it deserves.
               </p>
-              <motion.button
+              {
+                !isLoggedIn && (
+                  <motion.button
                 whileHover={{ scale: 1.04 }}
                 whileTap={{ scale: 0.97 }}
                 onClick={() => navigate("/signup")}
@@ -287,6 +292,8 @@ export default function About() {
                 Start Validating Free
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
               </motion.button>
+                ) 
+              }
             </div>
           </motion.div>
         </div>
