@@ -10,11 +10,13 @@ import axios from "axios";
 import logo from "../assets/ideafy_logo-removebg-preview.png";
 
 
-axios.defaults.baseURL = "http://localhost:5000";
+import API_URL from "../config/apiConfig";
+
+axios.defaults.baseURL = API_URL;
 
 const statusConfig = {
-  validated:   { label: "Validated",   color: "text-green-400 bg-green-400/10 border-green-400/20" },
-  rejected:    { label: "Rejected",    color: "text-red-400 bg-red-400/10 border-red-400/20" },
+  validated: { label: "Validated", color: "text-green-400 bg-green-400/10 border-green-400/20" },
+  rejected: { label: "Rejected", color: "text-red-400 bg-red-400/10 border-red-400/20" },
   in_progress: { label: "In Progress", color: "text-yellow-400 bg-yellow-400/10 border-yellow-400/20" },
 };
 
@@ -82,16 +84,16 @@ export default function Dashboard() {
   });
 
   const stats = [
-    { label: "Total Ideas", value: data?.totalIdeas || 0, icon: Lightbulb,  color: "from-purple-500/20 to-purple-500/5",  iconColor: "text-purple-400" },
-    { label: "Avg Score",   value: `${avgScore}/100`,     icon: BarChart2,   color: "from-blue-500/20 to-blue-500/5",     iconColor: "text-blue-400" },
-    { label: "Best Score",  value: bestScore,              icon: Trophy,      color: "from-yellow-500/20 to-yellow-500/5", iconColor: "text-yellow-400" },
-    { label: "Success Rate",value: `${successRate}%`,      icon: TrendingUp,  color: "from-green-500/20 to-green-500/5",   iconColor: "text-green-400" },
-    { label: "Credits Left",value: credits,                icon: CreditCard,  color: "from-pink-500/20 to-pink-500/5",     iconColor: "text-pink-400" },
+    { label: "Total Ideas", value: data?.totalIdeas || 0, icon: Lightbulb, color: "from-purple-500/20 to-purple-500/5", iconColor: "text-purple-400" },
+    { label: "Avg Score", value: `${avgScore}/100`, icon: BarChart2, color: "from-blue-500/20 to-blue-500/5", iconColor: "text-blue-400" },
+    { label: "Best Score", value: bestScore, icon: Trophy, color: "from-yellow-500/20 to-yellow-500/5", iconColor: "text-yellow-400" },
+    { label: "Success Rate", value: `${successRate}%`, icon: TrendingUp, color: "from-green-500/20 to-green-500/5", iconColor: "text-green-400" },
+    { label: "Credits Left", value: credits, icon: CreditCard, color: "from-pink-500/20 to-pink-500/5", iconColor: "text-pink-400" },
   ];
 
   const navItems = [
-    { id: "overview", label: "Overview",  icon: LayoutDashboard },
-    { id: "history",  label: "My Ideas",  icon: History },
+    { id: "overview", label: "Overview", icon: LayoutDashboard },
+    { id: "history", label: "My Ideas", icon: History },
   ];
 
   const Sidebar = () => (
@@ -107,12 +109,12 @@ export default function Dashboard() {
       {/* Logo */}
       <div className="p-6 flex items-center justify-start border-b border-white/5 "
       >
-         <img
-                    src={logo}
-                    alt="Ideafy Logo"
-                    className="h-8 w-8 object-contain drop-shadow-md cursor-pointer"
-                    onClick={() => navigate("/")}
-                  />
+        <img
+          src={logo}
+          alt="Ideafy Logo"
+          className="h-8 w-8 object-contain drop-shadow-md cursor-pointer"
+          onClick={() => navigate("/")}
+        />
         <h2 className="text-xl font-bold bg-gradient-to-r from-yellow-400 via-pink-500 to-purple-500 bg-clip-text text-transparent">
           Ideafy
         </h2>
@@ -137,11 +139,10 @@ export default function Dashboard() {
           <button
             key={id}
             onClick={() => { setActiveTab(id); setSidebarOpen(false); }}
-            className={`w-full flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm transition-all ${
-              activeTab === id
+            className={`w-full flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm transition-all ${activeTab === id
                 ? "bg-gradient-to-r from-purple-600/30 to-pink-600/30 text-white border border-purple-500/20"
                 : "text-white/50 hover:text-white hover:bg-white/5"
-            }`}
+              }`}
           >
             <Icon className="w-4 h-4" />
             {label}
@@ -379,9 +380,9 @@ function IdeaCard({ idea, idx, navigate }) {
 
   const scoreColor =
     score === null ? "text-white/40"
-    : score >= 70   ? "text-green-400"
-    : score >= 50   ? "text-yellow-400"
-    : "text-red-400";
+      : score >= 70 ? "text-green-400"
+        : score >= 50 ? "text-yellow-400"
+          : "text-red-400";
 
   return (
     <motion.div

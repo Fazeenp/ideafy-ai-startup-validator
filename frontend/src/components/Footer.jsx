@@ -1,5 +1,5 @@
 import React from "react";
-import { Twitter, Linkedin, Mail, Globe } from "lucide-react";
+// import { Twitter, Linkedin, Mail, Globe } from "lucide-react";
 import logo from "../assets/ideafy_logo-removebg-preview.png";
 
 export default function Footer() {
@@ -26,22 +26,14 @@ export default function Footer() {
               Ideafy helps you transform raw ideas into validated opportunities
               with AI-powered insights. Build what matters, faster.
             </p>
-          </div>
-
-         
-
-         
-
-          
+          </div>          
         </div>
 
         {/* Bottom Bar */}
         <div className="border-t border-slate-800 mt-10 pt-8 flex flex-col md:flex-row justify-between items-center">
           <p className="text-sm text-slate-500">
             © {new Date().getFullYear()} Ideafy. All rights reserved.
-          </p>
-
-          
+          </p> 
         </div>
       </div>
     </footer>

@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { User, Mail, Lock, ArrowRight, Sparkles, Eye, EyeOff, CheckCircle, XCircle } from "lucide-react";
+import API_URL from "../config/apiConfig";
 
 export default function Signup() {
   const navigate = useNavigate();
@@ -17,17 +18,17 @@ export default function Signup() {
   };
 
   const passwordRules = [
-    { label: "At least 8 characters",         pass: form.password.length >= 8 },
-    { label: "At least one number",            pass: /\d/.test(form.password) },
+    { label: "At least 8 characters", pass: form.password.length >= 8 },
+    { label: "At least one number", pass: /\d/.test(form.password) },
     { label: "At least one special character", pass: /[!@#$%^&*(),.?":{}|<>]/.test(form.password) },
   ];
-  const strengthScore  = passwordRules.filter(r => r.pass).length;
-  const strengthLabel  = ["", "Weak", "Fair", "Strong"][strengthScore];
-  const strengthColor  = ["", "text-red-400", "text-yellow-400", "text-green-400"][strengthScore];
-  const strengthBarW   = ["0%", "33%", "66%", "100%"][strengthScore];
-  const strengthBarBg  = ["", "bg-red-500", "bg-yellow-500", "bg-green-500"][strengthScore];
+  const strengthScore = passwordRules.filter(r => r.pass).length;
+  const strengthLabel = ["", "Weak", "Fair", "Strong"][strengthScore];
+  const strengthColor = ["", "text-red-400", "text-yellow-400", "text-green-400"][strengthScore];
+  const strengthBarW = ["0%", "33%", "66%", "100%"][strengthScore];
+  const strengthBarBg = ["", "bg-red-500", "bg-yellow-500", "bg-green-500"][strengthScore];
 
-  const passwordsMatch    = form.confirmPassword.length > 0 && form.password === form.confirmPassword;
+  const passwordsMatch = form.confirmPassword.length > 0 && form.password === form.confirmPassword;
   const passwordsMismatch = form.confirmPassword.length > 0 && form.password !== form.confirmPassword;
 
   const handleSubmit = async (e) => {
@@ -46,12 +47,12 @@ export default function Signup() {
     setError(null);
 
     try {
-      const res = await fetch("http://localhost:5000/api/auth/signup", {
+      const res = await fetch(`${API_URL}/api/auth/signup`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          name:     form.name,
-          email:    form.email,
+          name: form.name,
+          email: form.email,
           password: form.password,
         }),
       });
@@ -60,7 +61,7 @@ export default function Signup() {
 
       if (res.ok) {
         if (data.token) localStorage.setItem("token", data.token);
-        if (data.user)  localStorage.setItem("user", JSON.stringify(data.user));
+        if (data.user) localStorage.setItem("user", JSON.stringify(data.user));
         navigate("/dashboard");
       } else {
         const msg = data.message || "";
@@ -72,7 +73,7 @@ export default function Signup() {
           res.status === 409;
 
         setError({
-          type:    isExisting ? "exists" : "generic",
+          type: isExisting ? "exists" : "generic",
           message: msg || "Signup failed. Please try again.",
         });
       }
@@ -126,11 +127,10 @@ export default function Signup() {
             <motion.div
               initial={{ opacity: 0, y: -8 }}
               animate={{ opacity: 1, y: 0 }}
-              className={`mb-5 px-4 py-3 rounded-xl border text-sm ${
-                error.type === "exists"
-                  ? "bg-yellow-500/8 border-yellow-500/20 text-yellow-400"
-                  : "bg-red-500/10 border-red-500/20 text-red-400"
-              }`}
+              className={`mb-5 px-4 py-3 rounded-xl border text-sm ${error.type === "exists"
+                ? "bg-yellow-500/8 border-yellow-500/20 text-yellow-400"
+                : "bg-red-500/10 border-red-500/20 text-red-400"
+                }`}
             >
               {error.type === "exists" ? (
                 <div className="flex flex-col gap-2">
@@ -253,7 +253,7 @@ export default function Signup() {
                       <div key={i} className="flex items-center gap-1.5">
                         {rule.pass
                           ? <CheckCircle className="w-3 h-3 text-green-400 shrink-0" />
-                          : <XCircle    className="w-3 h-3 text-white/20 shrink-0" />
+                          : <XCircle className="w-3 h-3 text-white/20 shrink-0" />
                         }
                         <span className={`text-[10px] ${rule.pass ? "text-green-400/80" : "text-white/30"}`}>
                           {rule.label}
@@ -271,11 +271,10 @@ export default function Signup() {
                 Confirm Password
               </label>
               <div className="relative">
-                <Lock className={`absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 transition-colors ${
-                  passwordsMatch    ? "text-green-400/50"
+                <Lock className={`absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 transition-colors ${passwordsMatch ? "text-green-400/50"
                   : passwordsMismatch ? "text-red-400/50"
-                  : "text-white/25"
-                }`} />
+                    : "text-white/25"
+                  }`} />
                 <input
                   type={showConfirm ? "text" : "password"}
                   name="confirmPassword"
@@ -288,8 +287,8 @@ export default function Signup() {
                     ${passwordsMatch
                       ? "border border-green-500/40 focus:ring-1 focus:ring-green-500/40"
                       : passwordsMismatch
-                      ? "border border-red-500/40 focus:ring-1 focus:ring-red-500/40"
-                      : "border border-white/8 hover:border-white/15 focus:ring-1 focus:ring-purple-500/60 focus:border-purple-500/40"
+                        ? "border border-red-500/40 focus:ring-1 focus:ring-red-500/40"
+                        : "border border-white/8 hover:border-white/15 focus:ring-1 focus:ring-purple-500/60 focus:border-purple-500/40"
                     }`}
                 />
                 <button
@@ -306,13 +305,12 @@ export default function Signup() {
                 <motion.div
                   initial={{ opacity: 0, y: -4 }}
                   animate={{ opacity: 1, y: 0 }}
-                  className={`flex items-center gap-1.5 text-[10px] font-medium ${
-                    passwordsMatch ? "text-green-400" : "text-red-400"
-                  }`}
+                  className={`flex items-center gap-1.5 text-[10px] font-medium ${passwordsMatch ? "text-green-400" : "text-red-400"
+                    }`}
                 >
                   {passwordsMatch
                     ? <><CheckCircle className="w-3 h-3" /> Passwords match</>
-                    : <><XCircle    className="w-3 h-3" /> Passwords do not match</>
+                    : <><XCircle className="w-3 h-3" /> Passwords do not match</>
                   }
                 </motion.div>
               )}

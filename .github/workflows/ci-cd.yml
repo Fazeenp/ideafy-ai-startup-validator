@@ -13,6 +13,17 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Create .env
+        run: |
+          cat <<EOF > .env
+          GEMINI_API_KEY=${{ secrets.GEMINI_API_KEY }}
+          JWT_SECRET=${{ secrets.JWT_SECRET }}
+          MONGO_URI=${{ secrets.MONGO_URI }}
+          RAZORPAY_KEY_ID=${{ secrets.RAZORPAY_KEY_ID }}
+          RAZORPAY_KEY_SECRET=${{ secrets.RAZORPAY_KEY_SECRET }}
+          NODE_ENV=production
+          EOF
+
       - name: Stop old containers
         run: docker compose down || true
 
