@@ -3,8 +3,9 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowRight, ArrowLeft, CheckCircle, Building2, Layers, Target, Rocket } from "lucide-react";
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import API_URL from '@/config/apiConfig';
 
-axios.defaults.baseURL = "http://localhost:5000";
+axios.defaults.baseURL = API_URL;
 
 const token = localStorage.getItem("token");
 if (token) axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;

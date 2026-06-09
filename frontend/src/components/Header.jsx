@@ -24,6 +24,7 @@ export default function Header() {
   const links = [
     { name: "Pricing", to: "/pricing" },
     { name: "About", to: "/about" },
+  
   ];
 
   const isActive = (path) => location.pathname === path;
@@ -78,6 +79,7 @@ export default function Header() {
                     />
                   )}
                 </Link>
+                
               ))}
             </nav>
 

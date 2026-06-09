@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { User, Mail, Lock, ArrowRight, Sparkles, Eye, EyeOff, CheckCircle, XCircle } from "lucide-react";
+import API_URL from "@/config/apiConfig";
 
 export default function Signup() {
   const navigate = useNavigate();
@@ -46,7 +47,7 @@ export default function Signup() {
     setError(null);
 
     try {
-      const res = await fetch("http://localhost:5000/api/auth/signup", {
+      const res = await fetch(`${API_URL}/api/auth/signup`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

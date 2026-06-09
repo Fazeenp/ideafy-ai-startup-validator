@@ -2,8 +2,9 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Mail, Lock, ArrowRight, Zap } from "lucide-react";
+import API_URL from "@/config/apiConfig";
 
-const API_URL = "http://localhost:5000";
+ 
 
 export default function Login() {
   const navigate = useNavigate();

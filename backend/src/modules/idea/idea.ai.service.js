@@ -90,7 +90,7 @@ Experience: ${formData.experience}
     const result = await model.generateContent(prompt);
     let text = result.response.text();
 
-    console.log("🔥 RAW AI OUTPUT:\n", text);
+    console.log(" RAW AI OUTPUT:\n", text);
 
     text = text.replace(/```json|```/g, "").trim();
 

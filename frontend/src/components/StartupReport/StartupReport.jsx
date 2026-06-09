@@ -12,8 +12,9 @@ import RegenerateButton from "./actions/RegenerateButton";
 import logo from "../../assets/ideafy_logo-removebg-preview.png";
 import { BarChart3, Users, CheckCircle2, Coins, Lightbulb, Book, Menu, X, Home, RefreshCw } from "lucide-react";
 import axios from "axios";
+import API_URL from "@/config/apiConfig";
 
-axios.defaults.baseURL = "http://localhost:5000";
+axios.defaults.baseURL = API_URL;
 const token = localStorage.getItem("token");
 if (token) axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
 

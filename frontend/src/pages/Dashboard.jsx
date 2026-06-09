@@ -8,9 +8,10 @@ import {
 } from "lucide-react";
 import axios from "axios";
 import logo from "../assets/ideafy_logo-removebg-preview.png";
+import API_URL from "@/config/apiConfig";
 
 
-axios.defaults.baseURL = "http://localhost:5000";
+axios.defaults.baseURL = API_URL;
 
 const statusConfig = {
   validated:   { label: "Validated",   color: "text-green-400 bg-green-400/10 border-green-400/20" },
