@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Mail, Lock, ArrowRight, Zap } from "lucide-react";
-import API_URL from "@/config/apiConfig";
+import API_URL from "../config/apiConfig";
 
  
 

@@ -8,7 +8,8 @@ import {
 } from "lucide-react";
 import axios from "axios";
 import logo from "../assets/ideafy_logo-removebg-preview.png";
-import API_URL from "@/config/apiConfig";
+import API_URL from "../config/apiConfig";
+
 
 
 axios.defaults.baseURL = API_URL;

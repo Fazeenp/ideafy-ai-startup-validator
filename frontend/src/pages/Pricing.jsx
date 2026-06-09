@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { CheckCircle, Zap, Shield, Headphones } from "lucide-react";
-import API_URL from "@/config/apiConfig";
+import API_URL from "../config/apiConfig";
 
 axios.defaults.baseURL = API_URL;
 
