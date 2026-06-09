@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowRight, ArrowLeft, CheckCircle, Building2, Layers, Target, Rocket } from "lucide-react";
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import API_URL from '@/config/apiConfig';
+import API_URL from '../config/apiConfig';
 
 axios.defaults.baseURL = API_URL;
 

@@ -2,8 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { User, Mail, Lock, ArrowRight, Sparkles, Eye, EyeOff, CheckCircle, XCircle } from "lucide-react";
-import API_URL from "@/config/apiConfig";
-
+import API_URL from "../config/apiConfig";
 export default function Signup() {
   const navigate = useNavigate();
   const [form, setForm] = useState({ name: "", email: "", password: "", confirmPassword: "" });
